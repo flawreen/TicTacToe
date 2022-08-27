@@ -1,11 +1,20 @@
 class TicTacToe
+    attr_reader :playerOneWon, :playerTwoWon, :table
     @@playerOneWon = 0
     @@playerTwoWon = 0
-    attr_reader :playerOneWon, :playerTwoWon, :table
+    
     def initialize(player1="Player 1", player2="Player 2")
         @table = Array.new(3) {Array.new(3, 3)}
         @player1 = player1
         @player2 = player2
+    end
+
+    def self.playerOneAddWin()
+        @@playerOneWon += 1
+    end
+
+    def self.playerTwoAddWin()
+        @@playerTwoWon += 1
     end
 
     def inspect
@@ -59,7 +68,7 @@ class Games
 
     def win(player)
         show_table
-        player == 1 ? TicTacToe.playerOneWon += 1 : TicTacToe.playerTwoWon += 1
+        player == 1 ? TicTacToe.playerOneAddWin : TicTacToe.playerTwoAddWin
         puts "Player #{player} wins!"
         endGame
     end
@@ -72,6 +81,7 @@ class Games
     def chooseSlot(player)
         puts "--- Player #{player}'s Turn ---\nChoose an empty slot: top-right corner example: 1, 3"
         show_table
+	print ">> "
         choice = gets.chop
         choice = choice.split(", ")
         choice.map! {|x| Integer(x) - 1}
