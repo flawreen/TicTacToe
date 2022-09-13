@@ -78,22 +78,6 @@ class Games
         endGame
     end
 
-    def chooseSlot(player)
-        puts "--- Player #{player}'s Turn ---\nChoose an empty slot: top-right corner example: 1, 3"
-        show_table
-	print ">> "
-        choice = gets.chop
-        choice = choice.split(", ")
-        choice.map! {|x| Integer(x) - 1}
-        if @game.table[choice[0]][choice[1]] == 3
-            @game.table[choice[0]][choice[1]] = player
-        else
-            chooseSlot(player)
-        end
-        isWinner = check(player)
-        
-    end
-
     def beginGame
         puts @game.inspect
         @@gamesPlayed += 1
@@ -129,6 +113,21 @@ class Games
                 play
             end
         end
+    end
+	
+	def chooseSlot(player)
+        puts "--- Player #{player}'s Turn ---\nChoose an empty slot: top-right corner example: 1, 3"
+        show_table
+	print ">> "
+        choice = gets.chop
+        choice = choice.split(", ")
+        choice.map! {|x| Integer(x) - 1}
+        if @game.table[choice[0]][choice[1]] == 3
+            @game.table[choice[0]][choice[1]] = player
+        else
+            chooseSlot(player)
+        end
+        isWinner = check(player)
     end
     
 end 
